@@ -15,7 +15,7 @@ const Signup = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-96">
+      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl mb-6 text-center text-gray-800">Signup</h2>
         <Input 
           placeholder="Username" 
@@ -35,9 +35,9 @@ const Signup = () => {
           value={password} 
           onChange={(e) => setPassword(e.target.value)} 
         />
-        <Button type="primary" block onClick={handleSignup}>Signup</Button>
+        <Button className="text-white hover:text-cornflower-500 bg-cornflower-600 w-full" onClick={handleSignup}>Signup</Button>
         <div className="text-center mt-4">
-          <Link to="/login" className="text-blue-500 hover:text-blue-700">Already have an account? Login</Link>
+          <Link to="/login" className="text-cornflower-500 hover:text-cornflower-800">Already have an account? Login</Link>
         </div>
       </div>
     </div>

@@ -22,7 +22,7 @@ const Login = ({ setIsAuthenticated }) => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-96">
+      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl mb-6 text-center text-gray-800">Login</h2>
         <Input 
           placeholder="Username" 
@@ -37,9 +37,9 @@ const Login = ({ setIsAuthenticated }) => {
           onChange={(e) => setPassword(e.target.value)} 
         />
         {error && <p className="text-red-500 mb-4">{error}</p>}
-        <Button type="primary" block onClick={handleLogin}>Login</Button>
+        <Button className="text-white hover:text-cornflower-500 bg-cornflower-600 w-full" onClick={handleLogin}>Login</Button>
         <div className="text-center mt-4">
-          <Link to="/signup" className="text-blue-500 hover:text-blue-700">Don't have an account? Signup</Link>
+          <Link to="/signup" className="text-cornflower-500 hover:text-cornflower-800">Don't have an account? Signup</Link>
         </div>
       </div>
     </div>
