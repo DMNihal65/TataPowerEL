@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Input } from 'antd';
+import { Button, Input, message } from 'antd';
+import axios from 'axios';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -8,9 +9,42 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignup = () => {
-    // Add your signup logic here
-    navigate('/login');
+  const validateEmail = (email) => {
+    // Regular expression for validating email format
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const handleSignup = async () => {
+    // Validation for empty fields
+    if (!username || !email || !password) {
+      message.error('All fields are required.');
+      return;
+    }
+
+    // Email format validation
+    if (!validateEmail(email)) {
+      message.error('Please enter a valid email address (e.g., example@example.com).');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://172.18.101.47:2525/users/register', {
+        username: username,
+        email: email,
+        role: 'user', // Specify the role, or you can make this dynamic if needed
+        password: password,
+      });
+
+      if (response.status === 201 || response.status === 200) {
+        // Display the success message from the response body
+        message.success(response.data.message);
+        navigate('/login');
+      }
+    } catch (error) {
+      message.error('Signup failed. Please try again.');
+      console.error('There was an error during the signup process:', error);
+    }
   };
 
   return (
