@@ -22,7 +22,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white shadow-sm relative">
+    <header className="bg-white shadow-sm relative ">
       <div className="container mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
@@ -31,7 +31,7 @@ const Header = () => {
               alt="Logo"
               style={{
                 overflow: 'auto',
-                height: '54px',
+                height: '32px',
                 position: 'fixed',
               }}
             />
@@ -45,13 +45,13 @@ const Header = () => {
             </div> */}
           </div>
           <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-4 mr-24">
+          <div className="flex items-center space-x-4 mr-10">
             <img
               src={cmti}
               alt="Logo"
               style={{
                 overflow: 'auto',
-                height: '54px',
+                height: '36px',
                 position: 'fixed',
               }}
             />
@@ -64,15 +64,15 @@ const Header = () => {
               <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
             </div> */}
           </div>
-            <div className="relative">
+            {/* <div className="relative">
               <Mail onClick={toggleMail} className="text-gray-400 cursor-pointer" size={20} />
               {isMailOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
                   <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Inbox</a>
-                  {/* Add more mail-related options here */}
+                  
                 </div>
               )}
-            </div>
+            </div> */}
             <div className="relative">
               <Bell onClick={toggleNotification} className="text-gray-400 cursor-pointer" size={20} />
               <span className="absolute -top-1 -right-1 bg-green-500 text-xs text-white rounded-full h-4 w-4 flex items-center justify-center">4</span>

@@ -5,15 +5,15 @@ import Footer from './Footer'; // Import the Footer component
 
 const Layout = ({ children }) => {
   return (
-    <div className="flex h-screen">
-      <Sidebar />
-      <div className="flex flex-col flex-1">
-        <Header />
-        <div className="flex-grow p-4 overflow-y-auto"> {/* Allow scrolling in the content area */}
+    <div className="flex flex-col h-screen">
+      <Header />
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar className="w-64 bg-gray-800 text-white hidden md:block " /> {/* Sidebar visible on medium screens and up */}
+        <div className="flex-1 p-4 overflow-y-auto">
           {children}
         </div>
-        <Footer /> {/* Footer remains at the bottom */}
       </div>
+      <Footer /> {/* Footer remains at the bottom */}
     </div>
   );
 };

@@ -321,7 +321,7 @@ const ImageSearchRetrieval = () => {
       
       <Card title="Part Numbers" className="mb-4">
         <Row gutter={16}>
-          <Col span={8}>
+          <Col xs={24} sm={12} md={8} className="mb-4 sm:mb-0">
             <Select
               mode="multiple"
               placeholder="Select Existing Part Numbers"
@@ -336,14 +336,14 @@ const ImageSearchRetrieval = () => {
               ))}
             </Select>
           </Col>
-          <Col span={8}>
+          <Col xs={24} sm={12} md={8} className="mb-4 sm:mb-0">
             <Input
               placeholder="Custom Part Numbers (comma-separated)"
               value={customPartNumbers}
               onChange={(e) => setCustomPartNumbers(e.target.value)}
             />
           </Col>
-          <Col span={8}>
+          <Col xs={24} sm={12} md={8}>
             <Upload
               beforeUpload={handleExcelUpload}
               accept=".xlsx, .xls"
@@ -354,7 +354,7 @@ const ImageSearchRetrieval = () => {
           </Col>
         </Row>
         <Row gutter={16} className="mt-4">
-          <Col span={24}>
+          <Col xs={24}>
             <Select
               mode="multiple"
               placeholder="Part Numbers from Excel"
@@ -372,61 +372,60 @@ const ImageSearchRetrieval = () => {
           </Col>
         </Row>
       </Card>
-
+  
       <Card title="Actions" className="mb-4">
-        <Button
-          type="primary"
-          onClick={handleSubmit}
-          loading={loading}
-          className="mr-2"
-        >
-          Submit
-        </Button>
-        <Button onClick={handleRefresh} className="mr-2">
-          <RefreshCw className="mr-1" /> Refresh
-        </Button>
-        
-        <Row justify="end">
-          <Col>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-wrap">
+            <Button
+              type="primary"
+              onClick={handleSubmit}
+              loading={loading}
+              className="mb-2 sm:mb-0 sm:mr-2"
+            >
+              Submit
+            </Button>
+            <Button onClick={handleRefresh} className="mb-2 sm:mb-0 sm:mr-2">
+              <RefreshCw className="mr-1" /> Refresh
+            </Button>
             <Button
               type="default"
               onClick={handleSelectAll}
-              className="mr-2"
+              className="mb-2 sm:mb-0 sm:mr-2"
             >
               Select All
             </Button>
-          </Col>
-          <Col>
             <Button
               type="default"
               onClick={handleDeselectAll}
-              className="mr-2"
+              className="mb-2 sm:mb-0 sm:mr-2"
             >
               Deselect All
             </Button>
-          </Col>
-          <Col>
-          <Button
-  type="primary"
-  onClick={handleDownloadAll}
-  disabled={selectedImages.size === 0}
-  loading={loading}
->
-  Download Selected
-</Button>
-
-          </Col>
-        </Row>
+            <Button
+              type="primary"
+              onClick={handleDownloadAll}
+              disabled={selectedImages.size === 0}
+              loading={loading}
+            >
+              Download Selected
+            </Button>
+          </div>
+        </div>
       </Card>
-
+  
+      <Card title="EL Image Results" className="mb-4">
+      <div className="overflow-x-auto mt-4">
       <Table
         dataSource={dataSource}
         columns={columns}
         rowKey="part_number"
+        className="min-w-full"
       />
+    </div>
+    </Card>
 
-    {/* <Modal
-      title="Image Preview"
+      <Modal
+        title="Image Preview"
         visible={isModalVisible}
         footer={null}
         width="90%"
@@ -438,7 +437,7 @@ const ImageSearchRetrieval = () => {
           setPreviewImageUrl('');
         }}
       >
-        {previewImageUrl && (
+        {previewImageUrl && selectedImage && (
           <div className="flex flex-col lg:flex-row">
             <div className="lg:w-1/4 p-4 lg:border-r lg:border-gray-200">
               <h2 className="text-xl font-semibold mb-4">{selectedImage.production_line}</h2>
@@ -446,17 +445,17 @@ const ImageSearchRetrieval = () => {
             </div>
             <div className="lg:w-3/4 p-4 flex flex-col">
               <div className="flex-grow">
-             <img
-            src={previewImageUrl}
-           alt={previewImageUrl ? selectedImage.part_number : 'Preview'}
-           className="w-full h-auto object-cover"
-          />
+                <img
+                  src={previewImageUrl}
+                  alt={previewImageUrl ? selectedImage.part_number : 'Preview'}
+                  className="w-full h-auto object-cover"
+                />
               </div>
-              <div className="mt-8 flex justify-end space-x-4">
+              <div className="mt-8 flex flex-col sm:flex-row sm:justify-end sm:space-x-4">
                 <Button 
                   type="primary"  
-                  className="bg-green-500 hover:bg-green-600"
-                  onClick={() => handleDownload(previewImageUrl)}
+                  className="bg-green-500 hover:bg-green-600 mb-2 sm:mb-0"
+                  onClick={() => handleDownload(selectedImage)}
                 >
                   Download
                 </Button>
@@ -469,55 +468,10 @@ const ImageSearchRetrieval = () => {
             </div>
           </div>
         )}
-      </Modal> */}
-      <Modal
-  title="Image Preview"
-  visible={isModalVisible}
-  footer={null}
-  width="90%"
-  style={{ maxWidth: '1200px' }}
-  bodyStyle={{ padding: '0' }}
-  centered
-  onCancel={() => {
-    setIsModalVisible(false);
-    setPreviewImageUrl('');
-  }}
->
-  {previewImageUrl && selectedImage && (
-    <div className="flex flex-col lg:flex-row">
-      <div className="lg:w-1/4 p-4 lg:border-r lg:border-gray-200">
-        <h2 className="text-xl font-semibold mb-4">{selectedImage.production_line}</h2>
-        <p><strong>Part Number:</strong> {selectedImage.part_number}</p>
-      </div>
-      <div className="lg:w-3/4 p-4 flex flex-col">
-        <div className="flex-grow">
-          <img
-            src={previewImageUrl}
-            alt={previewImageUrl ? selectedImage.part_number : 'Preview'}
-            className="w-full h-auto object-cover"
-          />
-        </div>
-        <div className="mt-8 flex justify-end space-x-4">
-          <Button 
-            type="primary"  
-            className="bg-green-500 hover:bg-green-600"
-            onClick={() => handleDownload(selectedImage)}
-          >
-            Download
-          </Button>
-          <Button 
-            onClick={() => setIsModalVisible(false)}
-          >
-            Close
-          </Button>
-        </div>
-      </div>
-    </div>
-  )}
-</Modal>
-
+      </Modal>
     </div>
   );
+  
 };
 
 export default ImageSearchRetrieval;

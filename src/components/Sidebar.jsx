@@ -1,44 +1,48 @@
 import React, { useState } from 'react';
-import { Home, Search, Upload, FileText, Users, BarChart2, Bell, Menu, ChevronRight } from 'lucide-react';
+import { Home,BarChart, Search, Upload, FileText, Users, BarChart2, Bell, Menu, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/tatapower.svg';
 
 const Logo = ({ isCollapsed }) => (
   <div className={`flex items-center px-4 py-5 ${isCollapsed ? 'justify-center' : ''}`}>
     <div className="h-8 w-8 rounded-full bg-gradient-to-r from-white to-white flex items-center justify-center text-white font-bold text-xl">
-    <img
-          src={logo}
-          alt="Logo"
-          style={{
-            height: '100%',
-            maxWidth: '100%',
-            objectFit: 'contain', // Ensure the logo fits within the container
-          }}
-        />
+      <img
+        src={logo}
+        alt="Logo"
+        style={{
+          height: '100%',
+          maxWidth: '100%',
+          objectFit: 'contain', // Ensure the logo fits within the container
+        }}
+      />
     </div>
-    {!isCollapsed && <span className="ml-2 text-white text-lg font-semibold"> <div
-            className="logo"
-            style={{
-              height: '100px', // Adjust height when sidebar is collapsed or open
-              margin: '16px',
-              textAlign: 'center',
-            }}
-          >
-            <img
-          src={logo}
-          alt="Logo"
+    {!isCollapsed && (
+      <span className="ml-2 text-white text-lg font-semibold">
+        <div
+          className="logo"
           style={{
-            height: '100%',
-            maxWidth: '100%',
-            objectFit: 'contain', // Ensure the logo fits within the container
+            height: '100px', // Adjust height when sidebar is collapsed or open
+            margin: '16px',
+            textAlign: 'center',
           }}
-        />
-          </div></span>}
+        >
+          <img
+            src={logo}
+            alt="Logo"
+            style={{
+              height: '100%',
+              maxWidth: '100%',
+              objectFit: 'contain', // Ensure the logo fits within the container
+            }}
+          />
+        </div>
+      </span>
+    )}
   </div>
 );
 
 const MenuItem = ({ icon: Icon, label, onClick, isActive, hasNotification, notificationCount, isCollapsed }) => (
-  <div 
+  <div
     className={`flex items-center px-4 py-2 ${isActive ? 'bg-gray-700' : 'hover:bg-gray-700'} rounded-lg cursor-pointer`}
     onClick={onClick}
   >
@@ -57,21 +61,22 @@ const MenuItem = ({ icon: Icon, label, onClick, isActive, hasNotification, notif
 );
 
 const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true); // Initially collapsed
   const [activeItem, setActiveItem] = useState('dashboard');
   const navigate = useNavigate();
 
   const toggleSidebar = () => {
-    setIsCollapsed(prevState => !prevState);
+    setIsCollapsed((prevState) => !prevState);
   };
 
   const handleMenuClick = (path) => {
     setActiveItem(path);
     navigate(`/${path}`);
+    setIsCollapsed(true); // Collapse the sidebar after navigating
   };
 
   return (
-    <div 
+    <div
       className={`bg-gray-800 text-white h-full flex flex-col transition-all duration-300 ease-in-out ${
         isCollapsed ? 'w-16' : 'w-64'
       }`}
@@ -81,24 +86,24 @@ const Sidebar = () => {
           {isCollapsed ? <ChevronRight size={24} /> : <Menu size={24} />}
         </button>
         <img
-              src={logo}
-              alt="Logo"
-              className="ml-12"
-              style={{
-                overflow: 'auto',
-                height: '15vh',
-                position: 'fixed',
-              }}
-            />
+          src={logo}
+          alt="Logo"
+          className="ml-20"
+          style={{
+            overflow: 'auto',
+            height: '15vh',
+            position: 'fixed',
+          }}
+        />
       </div>
       <div className="flex-grow overflow-y-auto">
-        {/* <MenuItem 
-          icon={Home} 
-          label="Home" 
+        <MenuItem 
+          icon={BarChart} 
+          label="Analytics" 
           isActive={activeItem === 'dashboard'}
           onClick={() => handleMenuClick('dashboard')} 
           isCollapsed={isCollapsed} 
-        /> */}
+        />
         {/* {!isCollapsed && <div className="px-4 py-2 text-xs font-semibold text-gray-400 uppercase">Components</div>} */}
         <MenuItem 
           icon={Search} 
